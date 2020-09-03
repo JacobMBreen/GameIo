@@ -1,0 +1,7 @@
+**/__pycache__/
+poetry.lock
+pyproject.toml
+.vscode/
+env/
+firebase.json
+firebase.admin.json

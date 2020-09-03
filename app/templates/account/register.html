@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block main %}
+<form class= "form-signin" method="POST" action="/register">
+  <h1 class="mb-3 font-weight-normal">Register<h1>
+  {%with messages = get_flashed_messages() %} 
+    {% if messages %}
+      {% for message in messages %}
+      <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <label for="inputEmail"  class="rs-only">Email address</label>
+  <input for="email" id="inputEmail" name="email" class="form-control" placeholder="">
+  <label for="inputpassword" class="sr-only">password</label>
+  <input type="password" id="inputpassword" name="password" class="form-control" placeholder="">
+  <label for="inputpasswordconfirm" class="sr-only">password</label>
+  <input type="password" id="inputpasswordconfirm" name="password_confirm" class="form-control">
+  <button class="btn btn-lg btn-primary btn-block" type="submit">register</button>
+  <p>
+    <small class="text-muted">
+      <a href="/login"> already have an account? login here></a>
+    </small>
+  </p>
+</form>
+{% endblock %}
+   
+
+
