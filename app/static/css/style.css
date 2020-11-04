@@ -1,0 +1,23 @@
+#avatar{
+    width: 100%;
+    margin: 2rem 0;
+}
+#avatar img{
+    width: 33%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+body {
+    background-color: black;
+    color: white;
+}
+#image img{
+    width: 100%;
+}
+#navbar i{
+    margin-right: 5px; 
+}
+.dropdown-item{
+    color: #fff;
+}

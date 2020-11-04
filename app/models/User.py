@@ -27,6 +27,7 @@ class User():
     def set_user(self, user):
         session['logged_in'] = True
         session['user'] = user
+        session['user']['likes'] = user.get('likes', [])
         self.get_user()
 
     def unset_user(self):

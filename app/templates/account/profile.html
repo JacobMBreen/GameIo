@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="col-md-6 offset-md-3">
+  <form class= "form-signin" method="POST" action="/profile" enctype="multipart/form-data">
+    <h1 class="mb-3 font-weight-normal">MyProfile</h1>
+    {%with messages = get_flashed_messages() %} 
+      {% if messages %}
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    <div class="form-group">
+      <label for="firstname"  class="rs-only">First name</label>
+      <input for="text" id="firstname" name="firstname" class="form-control" placeholder="First name" value="{{ session['user']['first_name'] }}"/>
+    </div>
+    <div class="form-group">
+      <label for="lastname"  class="rs-only">Last name</label>
+      <input for="text" id="lastname" name="lastname" class="form-control" placeholder="Last name" value="{{ session['user']['last_name'] }}" />
+    </div>
+    {% if session['user']['avatar'] %}
+    <div id="avatar">
+      <img src="{{ session['user']['avatar'] }}" alt="Your Profile Image">
+    </div>
+  {% endif %}
+    <div class="form-group">
+      <div class="custom-file">
+        <input type="file" name="avatar" class="custom-file-input" id="customFile"/>
+        <label class="custom-file-label" for="customFile">Choose file</label>
+      </div>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+  </form>
+</div>
+{% endblock %}

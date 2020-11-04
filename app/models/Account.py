@@ -1,13 +1,19 @@
 from app.classes.Database import Database
 from app.classes.Upload import Upload
 from app.models.User import User
-from flask import session
+from flask import session, flash
 from flask import current_app as flask_app
 
 class Account():
 
     def __init__(self):
+        """
+        Initialise class with configuration 
+
+        """
+
         self.user = User()
+        return None
 
     def register(self, request):
         """ 
@@ -63,16 +69,26 @@ class Account():
             return
         
     def login(self, request):
+        """
+
+        It gets the users login credentials from the form 
+        and then sends it to the database
+
+        """
+        # check he have a form post
         if request.method == 'POST':
             email = request.form['email']
             password = request.form['password']
 
             error = None
             if not email:
+                # The  user hasn't put in an email
                 error = 'An email is required.'
             elif not password:
+                # The user hasn't put in a password
                 error = 'Password is required.'
             else:
+                # Try to log the user in
                 try:
                     database = Database()
                     user = database.login(email, password)
@@ -88,6 +104,12 @@ class Account():
             return
         
     def update(self, request):
+        """ 
+        It gets the users data from the form 
+        and then sends it to the database
+
+        """
+
         if request.method == 'POST':
             first_name = request.form['firstname']
             last_name = request.form['lastname']
@@ -98,22 +120,56 @@ class Account():
             elif not last_name:
                 error = 'A last name is required.'
             else:
+                # If the user has uploaded an image, handle the file upload
                 if 'avatar' in request.files:
                     file = request.files['avatar']
                     if file.filename:
-                        flask_app.logger.info(file)
                         uploader = Upload()
                         avatar = uploader.upload(file, session['user']['localId'])
-                        session['user']['avatar'] = avatar
+                        session['user']['avatar'] = "/" + avatar.strip("/")
+
+                # try to update the user's data
                 try:
                     session['user']['first_name'] = first_name
                     session['user']['last_name'] = last_name
                     database = Database()
                     user_auth = database.update_user(session['user'])
+                    session.modified = True
                 except Exception as err:
                     error = err
-            if error:
-                flash(str(error))
+
+        if error:
+            raise Exception(error)
+        else:
+            return
+        
+    def like(self, image_id, like, request):
+
+        """ 
+        It adds a liked image to the users image
+        
+        """
+                
+        changed = False
+        likes = session['user']['likes']
+
+        if like == 'true':
+            if image_id not in likes:
+                likes.append(image_id)
+                changed = True
+        else:
+            if image_id in likes:
+                likes.remove(image_id)
+                changed = True
+
+        if changed:
+            session['user']['likes'] = likes
+            database = Database()
+            database.update_user(session['user'])
+            session.modified = True
+
+        return changed
         
     def logout(self):
         self.user.unset_user()
+

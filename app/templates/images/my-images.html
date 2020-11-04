@@ -1,0 +1,28 @@
+
+    {% extends "base.html" %}
+    {% block main %}
+    <div id="images" class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<h2>{{ title }}</h2>
+				{% with messages = get_flashed_messages() %}
+					{# Handle messages here #}
+				{% endwith %}
+				{% if images %}
+					<div class="grid">
+					{% for image_object in images.each() %}
+						{% with image = image_object.val() %}
+						<div class="grid-item">
+							<img src="{{ image.upload_location }}" alt="{{ image.description }}">
+							<a href="/images/edit/{{ image.id }}"><i class="fas fa-edit"></i></a>
+							<a href="/images/delete/{{ image.id }}"><i class="fas fa-trash-alt"></i></a>
+						</div>
+						{% endwith %}
+					{% endfor %}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+    </div>
+	{% endblock %}
+	

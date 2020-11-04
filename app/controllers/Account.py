@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, redirect, render_template, request, url_for, session
+from flask import Blueprint, flash, redirect, render_template, request, url_for, session, jsonify
 from flask import current_app as flask_app
 from app.models.Account import Account
 
@@ -73,3 +73,21 @@ def logout():
     account = Account()
     account.logout()
     return redirect(url_for('home.index'))
+
+@bp.route('/like', methods=['GET'])
+def like():
+
+    image_id = request.args.get('image_id')
+    like = request.args.get('like')
+    flask_app.logger.info('## LIKE VAL CT ##')
+    flask_app.logger.info(request.args.get('like'))
+    flask_app.logger.info(like)
+    response = ''
+
+    try:
+        account = Account()
+        response = account.like(image_id, like, request)
+    except Exception as err:
+        response = str(err)
+    
+    return jsonify(response)

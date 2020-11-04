@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block main %}
+<section id="layout-content">
+	<div id="upload" class="text-center">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<form class="form-upload" method="POST">
+						<h1 class="mb-3 font-weight-normal">Image edit</h1>
+						{% with messages = get_flashed_messages() %}
+							{# Handle messages here #}
+						{% endwith %}
+						<div id="image">
+							<img src="{{ image.upload_location }}" alt="{{ image.description }}">
+						</div>
+						<div class="form-group">
+							<label>Name</label>
+							<input type="text" name="name" class="form-control" value="{{ image.name }}" required/>
+						</div>
+						<div class="form-group">
+							<label>Description</label>
+							<input type="text" name="description" class="form-control" value="{{ image.description}}" required/>
+						</div>
+						<div class="form-group">
+							<label>Categories</label>
+							<select name="category" class="custom-select" required>
+								<option value="abstract">Abstract</option>
+								<option value="animals-wildlife">Animals/Wildlife</option>
+								<option value="the-arts">The Arts</option>
+								<option value="backgrounds-textures">Backgrounds/Textures</option>
+								<option value="beauty-fashion">Beauty/Fashion</option>
+								<option value="buildings-landmarks">Buildings/Landmarks</option>
+								<option value="business-finance">Business/Finance</option>
+								<option value="editorial">Editorial</option>
+								<option value="education">Education</option>
+								<option value="food-and-drink">Food and Drink</option>
+								<option value="healthcare_medical">Healthcare/Medical</option>
+								<option value="holidays">Holidays</option>
+								<option value="illustrations">Illustrations</option>
+								<option value="industrial">Industrial</option>
+								<option value="interiors">Interiors</option>
+								<option value="miscellaneous">Miscellaneous</option>
+								<option value="nature">Nature</option>
+								<option value="parks-outdoor">Parks/Outdoor</option>
+								<option value="people">People</option>
+								<option value="religion">Religion</option>
+								<option value="science">Science</option>
+								<option value="signs-symbols">Signs/Symbols</option>
+								<option value="sports-recreation">Sports/Recreation</option>
+								<option value="technology">Technology</option>
+								<option value="transportation">Transportation</option>
+								<option value="vintage">Vintage</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>Filter</label>
+							<select name="filter" class="custom-select" required>
+								<option value="_1977">1977</option>
+								<option value="aden">Aden</option>
+								<option value="amaro">Amaro</option>
+								<option value="ashby">Ashby</option>
+								<option value="brannan">Brannan</option>
+								<option value="brooklyn">Brooklyn</option>
+								<option value="charmes">Charmes</option>
+								<option value="clarendon">Clarendon</option>
+								<option value="crema">Crema</option>
+								<option value="dogpatch">Dogpatch</option>
+								<option value="earlybird">Earlybird</option>
+								<option value="gingham">Gingham</option>
+								<option value="ginza">Ginza</option>
+								<option value="hefe">Hefe</option>
+								<option value="helena">Helena</option>
+								<option value="hudson">Hudson</option>
+								<option value="inkwell">Inkwell</option>
+								<option value="kelvin">Kelvin</option>
+								<option value="kuno">Kuno</option>
+								<option value="lark">Lark</option>
+								<option value="lofi">Lo-Fi</option>
+								<option value="ludwig">Ludwig</option>
+								<option value="maven">Maven</option>
+								<option value="mayfair">Mayfair</option>
+								<option value="moon">Moon</option>
+								<option value="nashville">Nashville</option>
+								<option value="perpetua">Perpetua</option>
+								<option value="poprocket">Poprocket</option>
+								<option value="reyes">Reyes</option>
+								<option value="rise">Rise</option>
+								<option value="sierra">Sierra</option>
+								<option value="slumber">Slumber</option>
+								<option value="stinson">Stinson</option>
+								<option value="toaster">Toaster</option>
+								<option value="valencia">Valencia</option>
+								<option value="vesper">Vesper</option>
+								<option value="walden">Walden</option>
+								<option value="willow">Willow</option>
+								<option value="xpro2">X-pro II</option>
+							</select>
+						</div>
+						<input type="hidden" name="image_id" value="{{ image.id }}"/>
+						<input type="hidden" name="upload_location" value="{{ image.upload_location }}"/>
+						<input type="hidden" name="created_at" value="{{ image.created_at }}"/>
+						<button class="btn btn-lg btn-primary btn-block" type="submit">Image edit</button>
+					</form>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}
